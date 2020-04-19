@@ -1,5 +1,5 @@
 var configuration = {
-  targetFPS: 60, // target FPS
+  targetFPS: 60, // target FPS NOTE: this is not configurable at the moment so please do not update this.
   size: 800, // canvas size
   numberOfUnit: 64,
   numberOfEnemies: 4,
@@ -9,7 +9,7 @@ var configuration = {
   playerColor: 'blue',
   enemyColor: 'red',
   wallColor: 'black',
-  gridColor: '#BBB',
+  gridColor: '#EEE',
 };
 
 configuration.unitSize = configuration.size / configuration.numberOfUnit;
