@@ -14,7 +14,7 @@ function Graph(map) {
   this.nodes = nodes;
 }
 
-Graph.prototype.search = function(start, end, ignoreNodeTypes, ignoreNodePositions = []) {
+Graph.prototype.search = function(start, end, transform, ignoreNodeTypes, ignoreNodePositions = []) {
   // no operation needed for node that has type in ignoreNodeTypes.
   if (ignoreNodeTypes.includes(end.type)) {
     return [];
@@ -30,7 +30,7 @@ Graph.prototype.search = function(start, end, ignoreNodeTypes, ignoreNodePositio
     var node = openSet[index];
 
     if (node == end) {
-      return this.reconstructPath(node);
+      return this.reconstructPath(node, transform);
     }
 
     openSet.remove(index);
@@ -68,12 +68,12 @@ Graph.prototype.search = function(start, end, ignoreNodeTypes, ignoreNodePositio
   return [];
 };
 
-Graph.prototype.reconstructPath = function(endNode) {
+Graph.prototype.reconstructPath = function(endNode, transform) {
   var node = endNode;
   var result = [];
 
   while(node.parent) {
-    result.push(node.position);
+    result.push(transform(node.position));
     node = node.parent;
   }
 

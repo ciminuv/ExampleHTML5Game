@@ -93,11 +93,11 @@ var gameManager = {
 
     var startNode = this.graph.nodes[currentPositionOnMap.x][currentPositionOnMap.y];
     var endNode = this.graph.nodes[targetPositionOnMap.x][targetPositionOnMap.y];
-    var result = this.graph.search(startNode, endNode, [NodeType.WALL]);
-    var unitSize = this.config.unitSize;
-    var mapRoutePath = result.map(p => new Point(p.x * unitSize, p.y * unitSize));
+    var routePath = this.graph.search(startNode, endNode, (mapPosition) => {
+      return new Point(mapPosition.x * this.config.unitSize, mapPosition.y * this.config.unitSize)
+    }, [NodeType.WALL]);
 
-    component.routePath = mapRoutePath;
+    component.routePath = routePath;
   }
 };
 
