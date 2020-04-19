@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="configuration.js"></script>
+  <script src="utils.js"></script>
+  <script src="component.js"></script>
+  <script src="graph.js"></script>
+  <script src="generator.js"></script>
+  <script src="renderer.js"></script>
+  <script src="game_manager.js"></script>
+</head>
+
+<body onload="init()">
+  <script>
+    function init() {
+      gameManager.init();
+    }
+
+    gameManager.canvas.addEventListener('mousedown', function (e) {
+      var position = getMousePosition(gameManager.canvas, e);
+      if (position === undefined) { return; }
+
+      gameManager.updatePlayerTargetPossition(position);
+    });
+  </script>
+</body>
+
+</html>
