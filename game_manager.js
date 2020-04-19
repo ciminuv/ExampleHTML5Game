@@ -32,13 +32,7 @@ var gameManager = {
     this.setNewTargetPossitionForComponent(this.player, newPosition);
   },
   isEndGame: function() {
-    for (enemy of this.enemies) {
-      if (enemy.crashWith(this.player)) {
-        return true;
-      }
-    }
-
-    return false;
+    return this.enemies.some(enemy => enemy.crashWith(this.player));
   },
   updateEnemies: function() {
     for (enemy of this.enemies) {
@@ -50,7 +44,7 @@ var gameManager = {
     this.generateNewTargetForEnemiesIfNeed();
   },
   generateNewTargetForEnemiesIfNeed: function() {
-    var currentEnemyTargets = this.getEnemyTargets();
+    var currentEnemyTargets = this.getEnemyTargets(); // TODO: cache this list and only recalculating on changes.
     for (enemy of this.enemies) {
       // this character is already has its target.
       if (enemy.routePath.length > 0) { continue; }
@@ -61,18 +55,17 @@ var gameManager = {
     }
   },
   getEnemyTargets: function() {
-    var results = [];
-    for (enemy of this.enemies) {
-      if (enemy.routePath.length <= 0) { continue; }
+    return this.enemies.reduce((results, enemy) => {
+      if (enemy.routePath.length <= 0) { return results; }
       var target = convertCoordinateToMapPosition(enemy.routePath.last(), this.config.unitSize);
       results.push(target);
-    }
-    return results;
+      return results;
+    }, []);
   },
   getEnemyPositions: function() {
     return this.enemies.map(enemy => convertCoordinateToMapPosition(enemy.body.origin, this.config.unitSize));
   },
-  checkEnemyCollision: function() {
+  checkEnemyCollision: function() { // TODO: this function is extremely expensive when there is huge number of enemies, consider some improvement later.
     var enemyPositions = this.getEnemyPositions();
     for (i = 0; i < this.enemies.length; ++i) {
       var enemy = this.enemies[i];

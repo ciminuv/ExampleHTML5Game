@@ -34,12 +34,9 @@ Generator.prototype.generateComponent = function(map, unitPerSecondSpeed, color,
 };
 
 Generator.prototype.generateEnemies = function(map) {
-  var results = [];
-  for (i = 0; i < this.config.numberOfEnemies; ++i) {
-    var enemy = this.generateComponent(map, this.config.enemySpeed, this.config.enemyColor, this.config.enemyRange);
-    results.push(enemy);
-  }
-  return results;
+  return Array(this.config.numberOfEnemies).fill(0).map((_) => {
+    return this.generateComponent(map, this.config.enemySpeed, this.config.enemyColor, this.config.enemyRange);
+  });
 };
 
 // expected output: response position should follow the following rules:
@@ -61,13 +58,12 @@ Generator.prototype.generateRandomPositionForEnemy = function(map, existTargets)
     this.acceptedDistanceFromOtherTargets = Math.min(this.config.enemyRange, this.acceptedDistanceFromOtherTargets);
   }
 
-  var acceptedDistanceFromOtherTargets = this.acceptedDistanceFromOtherTargets;
   do {
     var x = getRandomInt(this.enemyPositionGapToConer, map.length - this.enemyPositionGapToConer);
     var y = getRandomInt(this.enemyPositionGapToConer, map.length - this.enemyPositionGapToConer);
     var position = new Point(x, y);
-    var validDistanceToOtherTargets = existTargets.reduce(function(result, current) {
-      return result && position.distance(current) >= acceptedDistanceFromOtherTargets;
+    var validDistanceToOtherTargets = existTargets.reduce((result, current) => {
+      return result && position.distance(current) >= this.acceptedDistanceFromOtherTargets;
     }, true);
   } while (map[x][y] == NodeType.WALL || !validDistanceToOtherTargets);
 
