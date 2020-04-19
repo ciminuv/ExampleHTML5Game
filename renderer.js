@@ -38,7 +38,7 @@ Renderer.prototype.drawComponents = function() {
       var position = component.body.middle();
       var outerRadius = this.config.unitSize * component.radarRange;
       var defaultInnerRadaRadius = outerRadius / 1.5;
-      component.innerRadaRadius = (component.innerRadaRadius === undefined) ? defaultInnerRadaRadius : component.innerRadaRadius + component.speed * 2;
+      component.innerRadaRadius = (component.innerRadaRadius === undefined) ? defaultInnerRadaRadius : component.innerRadaRadius + component.speed / 5;
       if (component.innerRadaRadius >= outerRadius) {
         component.innerRadaRadius = defaultInnerRadaRadius;
       }
