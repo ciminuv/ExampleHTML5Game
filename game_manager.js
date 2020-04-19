@@ -107,12 +107,11 @@ function gameFrameLoop() {
   if (gameManager.isEndGame()) {
     gameManager.reset();
   } else {
-    gameManager.checkEnemyCollision();
     gameManager.renderer.render();
+
+    gameManager.checkEnemyCollision();
     gameManager.player.update();
-    for (enemy of gameManager.enemies) {
-      enemy.update();
-    }
+    gameManager.enemies.forEach((enemy) => enemy.update());
   }
 
   window.fps.innerHTML = fpsValue + " FPS";
