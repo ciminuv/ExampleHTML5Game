@@ -1,5 +1,3 @@
-var NodeType = { NOTHING: 0, WALL: 1 };
-
 function Generator(config) {
   this.config = config;
 }

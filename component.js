@@ -67,12 +67,36 @@ Component.prototype.update = function() {
   }
 
   if (nextTarget.x == this.body.origin.x && nextTarget.y == this.body.origin.y) {
+    this.recentPosition = nextTarget;
     this.routePath.remove(0);
   }
 };
 
 Component.prototype.crashWith = function(other) {
   return this.body.isIntersect(other.body);
+};
+
+// TODO: it is not suitable to place this method within Component itself as it is a view from outside (enermy) otherwise we can use routePath data.
+Component.prototype.guessDirectionBaseOnHistoryMovement = function() {
+  if (this.routePath === undefined || this.routePath.length == 0) {
+    return;
+  }
+  if (this.recentPosition === undefined) {
+    return;
+  }
+
+  var currentTarget = this.routePath[0];
+  if (currentTarget.x < this.recentPosition.x) {
+    return Direction.WEST;
+  } else if (currentTarget.x > this.recentPosition.x) {
+    return Direction.EAST;
+  } else if (currentTarget.y < this.recentPosition.y) {
+    return Direction.NORTH;
+  } else if (currentTarget.y > this.recentPosition.y) {
+    return Direction.SOUTH;
+  }
+
+  return;
 };
 
 Component.prototype.isInRange = function(other, range) {

@@ -43,7 +43,7 @@ var gameManager = {
   updateEnemies: function() {
     for (enemy of this.enemies) {
       if (enemy.isInRange(this.player, this.config.enemyMapRange)) {
-        this.setNewTargetPossitionForComponent(enemy, this.player.body.origin);
+        this.setNewTargetPossitionForComponent(enemy, this.player.body.origin, this.player.guessDirectionBaseOnHistoryMovement());
       }
     }
 
@@ -86,9 +86,10 @@ var gameManager = {
       }
     }
   },
-  setNewTargetPossitionForComponent: function(component, position) {
+  setNewTargetPossitionForComponent: function(component, position, targetDirection) {
     var targetPositionOnMap = convertCoordinateToMapPosition(position, this.config.unitSize);
-    this.setNewTargetPossitionOnMapForComponent(component, targetPositionOnMap);
+    var newTargetPosition = constructTargetPosition(this.map, targetPositionOnMap, targetDirection);
+    this.setNewTargetPossitionOnMapForComponent(component, newTargetPosition);
   },
   setNewTargetPossitionOnMapForComponent: function(component, targetPositionOnMap) {
     var currentTargetPositionOnMap = convertCoordinateToMapPosition(component.routePath.last(), this.config.unitSize);
