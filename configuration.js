@@ -1,5 +1,5 @@
 var configuration = {
-  updateInterval: 50, // target FPS
+  targetFPS: 60, // target FPS
   size: 800, // canvas size
   numberOfUnit: 64,
   numberOfEnemies: 4,

@@ -28,7 +28,7 @@ Generator.prototype.generateComponent = function(map, unitPerSecondSpeed, color,
     var y = Math.floor(Math.random() * this.config.numberOfUnit);
   } while (map[x][y] == NodeType.WALL);
 
-  var speedPerFrame = (unitPerSecondSpeed * this.config.unitSize) / this.config.updateInterval;
+  var speedPerFrame = (unitPerSecondSpeed * this.config.unitSize) / this.config.targetFPS;
   var rect = new Rect(x * this.config.unitSize, y * this.config.unitSize, this.config.unitSize, this.config.unitSize);
   return new Component(rect, speedPerFrame, color, radarRange);
 };

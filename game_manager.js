@@ -7,7 +7,7 @@ var gameManager = {
 
     this.reset();
 
-    this.interval = setInterval(update, 1000 / this.config.updateInterval);
+    gameFrameLoop();
     this.updateEnemiesInterval = setInterval(updateEnemies, 500);
   },
   initCanvas: function() {
@@ -107,7 +107,9 @@ var gameManager = {
   }
 };
 
-function update() {
+function gameFrameLoop() {
+  let fpsValue = fps.tick();
+
   if (gameManager.isEndGame()) {
     gameManager.reset();
   } else {
@@ -118,6 +120,9 @@ function update() {
       enemy.update();
     }
   }
+
+  window.fps.innerHTML = fpsValue + " FPS";
+  requestAnimationFrame(gameFrameLoop);
 }
 
 function updateEnemies() {
