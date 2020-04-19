@@ -46,7 +46,7 @@ Generator.prototype.generateEnemies = function(map) {
 //                which means the idea of setting new random position range from the exact range that radar can cover, might seem to work but it reduces the probability of covering the exact 4 corners significantly,
 //                because if our player stands in any corner, the probability of detecting the character from this random position is only 1 / Math.pow(range size, 2).
 //   - Should keep enough distance from other enemy targets.
-Generator.prototype.generateRandomPositionForEnemy = function(map, existTargets) {
+Generator.prototype.generateRandomPositionForEnemy = async function(map, existTargets) {
   if (this.enemyPositionGapToConer === undefined) {
     this.enemyPositionGapToConer = this.config.enemyRange / 5;
   }
@@ -65,6 +65,7 @@ Generator.prototype.generateRandomPositionForEnemy = function(map, existTargets)
     var validDistanceToOtherTargets = existTargets.reduce((result, current) => {
       return result && position.distance(current) >= this.acceptedDistanceFromOtherTargets;
     }, true);
+    await sleep(50);
   } while (map[x][y] == NodeType.WALL || !validDistanceToOtherTargets);
 
   return position;

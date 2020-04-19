@@ -43,14 +43,15 @@ var gameManager = {
 
     this.generateNewTargetForEnemiesIfNeed();
   },
-  generateNewTargetForEnemiesIfNeed: function() {
+  generateNewTargetForEnemiesIfNeed: async function() {
     var currentEnemyTargets = this.getEnemyTargets(); // TODO: cache this list and only recalculating on changes.
-    for (enemy of this.enemies) {
+    for (var i = 0; i < this.enemies.length; ++i) {
+      var enemy = this.enemies[i];
       // this character is already has its target.
       if (enemy.routePath.length > 0) { continue; }
 
       var currentPositionOnMap = convertCoordinateToMapPosition(enemy.body.origin, this.config.unitSize);
-      var position = this.generator.generateRandomPositionForEnemy(this.map, currentEnemyTargets.concat(currentPositionOnMap));
+      var position = await this.generator.generateRandomPositionForEnemy(this.map, currentEnemyTargets.concat(currentPositionOnMap));
       this.setNewTargetPossitionOnMapForComponent(enemy, position);
     }
   },

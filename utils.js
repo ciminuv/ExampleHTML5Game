@@ -9,6 +9,10 @@ function convertCoordinateToMapPosition(coordinate, unitSize) {
   return new Point(Math.floor(coordinate.x / unitSize), Math.floor(coordinate.y / unitSize));
 }
 
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
