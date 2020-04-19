@@ -19,6 +19,8 @@ Generator.prototype.generateMap = function() {
       }
     }
   }
+  // simple solution to prevent wall to block 2 fields ~ not 100%.
+  grid[randomGapPossition][middle - 1] = grid[randomGapPossition][middle + 2] = NodeType.NOTHING;
   return grid;
 };
 
