@@ -14,6 +14,11 @@ function Graph(map) {
   this.nodes = nodes;
 }
 
+// A* search algorithm: https://en.wikipedia.org/wiki/A*_search_algorithm
+// f(n) = g(n) + h(n)
+// f(n) = estimated cost from node n to destination.
+// where n is the next node on the path, g(n) is the cost of the path from the start node to n, and h(n) is a heuristic function that estimates the cost of the cheapest path from n to the goal.
+
 Graph.prototype.search = function(start, end, transform, ignoreNodeTypes, ignoreNodePositions = []) {
   // no operation needed for node that has type in ignoreNodeTypes.
   if (ignoreNodeTypes.includes(end.type)) {
@@ -116,10 +121,10 @@ Graph.prototype.neighbors = function(node) {
   if (this.nodes[x+1] && this.nodes[x+1][y]) {
     results.push(this.nodes[x+1][y]);
   }
-  if (this.nodes[x][y-1] && this.nodes[x][y-1]) {
+  if (this.nodes[x][y-1]) {
     results.push(this.nodes[x][y-1]);
   }
-  if (this.nodes[x][y+1] && this.nodes[x][y+1]) {
+  if (this.nodes[x][y+1]) {
     results.push(this.nodes[x][y+1]);
   }
   return results;
